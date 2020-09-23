@@ -5,7 +5,12 @@ import './Calculator.less';
 
 export default class Calculator extends React.Component {
   state = {
-    value: [1, '+', 2]
+    values: [],
+    error: false
+  }
+
+  componentWillUnmount = () => {
+    this.handleClear();
   }
 
   render() {
@@ -13,11 +18,69 @@ export default class Calculator extends React.Component {
       <section id="calculator" className="page" >
         <h1>在线计算器</h1>
         <form>
-          <p id="screen">{this.state.value.join(' ')}</p>
-          <Buttons />
+          <p id="screen">{this.state.values.join(' ')}</p>
+          <Buttons
+            handleInput={this.handleInput}
+            handleClear={this.handleClear}
+            handleCalculate={this.handleCalculate}
+          />
         </form>
         <Link to="/">回到主页</Link>
       </section>
     );
+  }
+
+  handleInput = (value) => {
+    if (this.state.values.length < 3 && !this.state.error) {
+      this.setState({
+        values: this.state.values.concat(value)
+      });
+    }
+  }
+
+  handleClear = () => {
+    this.setState({
+      values: [],
+      error: false
+    });
+  }
+
+  handleCalculate = () => {
+    if (this.state.values.length < 3) {
+      this.beError();
+      return;
+    }
+    const firstValue = this.state.values[0];
+    const secondValue = this.state.values[2];
+    const operator = this.state.values[1];
+    if (typeof operator !== 'string' ||
+      typeof firstValue !== 'number' ||
+      typeof secondValue !== 'number') {
+        this.beError();
+        return;
+    }
+    if (this.state.error) {
+      return;
+    }
+
+    let result;
+    switch (operator) {
+      case '+':
+        result = firstValue + secondValue;
+        break;
+      case '-':
+        result = firstValue - secondValue;
+        break;
+      case '×':
+        result = firstValue * secondValue;
+    }
+    this.setState({ values: [result] });
+  }
+
+  beError() {
+    this.setState({
+      values: ['Error!'],
+      error: true
+    });
   }
 };
