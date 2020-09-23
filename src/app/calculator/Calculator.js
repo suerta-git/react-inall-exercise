@@ -31,7 +31,7 @@ export default class Calculator extends React.Component {
   }
 
   handleInput = (value) => {
-    if (this.state.values.length < 3 && !this.state.error) {
+    if (this.state.values.length < 3) {
       this.setState({
         values: this.state.values.concat(value)
       });
@@ -40,14 +40,13 @@ export default class Calculator extends React.Component {
 
   handleClear = () => {
     this.setState({
-      values: [],
-      error: false
+      values: []
     });
   }
 
   handleCalculate = () => {
     if (this.state.values.length < 3) {
-      this.beError();
+      this.handleClear();
       return;
     }
     const firstValue = this.state.values[0];
@@ -56,11 +55,8 @@ export default class Calculator extends React.Component {
     if (typeof operator !== 'string' ||
       typeof firstValue !== 'number' ||
       typeof secondValue !== 'number') {
-        this.beError();
+        this.handleClear();
         return;
-    }
-    if (this.state.error) {
-      return;
     }
 
     let result;
@@ -79,8 +75,7 @@ export default class Calculator extends React.Component {
 
   beError() {
     this.setState({
-      values: ['Error!'],
-      error: true
+      values: ['Error!']
     });
   }
 };
