@@ -8,8 +8,8 @@ export default class Buttons extends React.Component {
       <ul id="buttons">
         {['+', '-', '×'].map(operator => <Operator operator={operator} />)}
         {[7, 8, 9, 4, 5, 6, 1, 2, 3, 0].map(number => <NumberButton number={number} />)}
-        <button type="button">Clear</button>
-        <button type="button">=</button>
+        <button className="clear-color button-shape" type="button">Clear</button>
+        <button className="equal-color button-shape" type="button">=</button>
       </ul>
     );
   }
