@@ -25,7 +25,7 @@ export default class Calculator extends React.Component {
             handleCalculate={this.handleCalculate}
           />
         </form>
-        <Link to="/">回到主页</Link>
+        <Link className="font-size-return" to="/">回到主页</Link>
       </section>
     );
   }

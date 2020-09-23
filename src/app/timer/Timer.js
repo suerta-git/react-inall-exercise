@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Timer.less';
 
 export default class Timer extends React.Component {
   state = {
@@ -22,13 +23,13 @@ export default class Timer extends React.Component {
         <h1>在线倒计时器</h1>
         <div>
           <form>
-            <label for="time">设置时间</label>
+            <label className="font-size-return" for="time">设置时间</label>
             <input type="text" id="time" value={this.state.seconds} onChange={this.handleInputChange} />
             <button type="button" onClick={this.handleStart} disabled={this.state.timing}>Start</button>
           </form>
           <p>{this.state.display}</p>
         </div>
-        <Link to="/">回到主页</Link>
+        <Link className="font-size-return" to="/">回到主页</Link>
       </section>
     );
   }
