@@ -31,9 +31,20 @@ export default class Calculator extends React.Component {
   }
 
   handleInput = (value) => {
-    if (this.state.values.length < 3) {
+    const newValues = this.state.values.concat();
+    if (typeof newValues[newValues.length - 1] === 'number' && typeof value === 'number') {
+      let lastNumber = newValues.pop();
+      lastNumber = lastNumber * 10 + value;
+      newValues.push(lastNumber);
       this.setState({
-        values: this.state.values.concat(value)
+        values: newValues
+      });
+      return;
+    }
+    if (this.state.values.length < 3) {
+      newValues.push(value);
+      this.setState({
+        values: newValues
       });
     }
   }

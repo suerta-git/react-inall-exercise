@@ -6,14 +6,20 @@ export default class Timer extends React.Component {
   state = {
     seconds: '',
     display: 'Start',
-    timing: false
+    timing: false,
+    timingId: 0
   }
 
   componentWillUnmount = () => {
+    if (this.state.timing) {
+      clearInterval(this.state.timingId);
+    }
+
     this.setState({
       seconds: '',
       display: 'Start',
-      timing: false
+      timing: false,
+      timingId: 0
     });
   }
 
@@ -50,11 +56,6 @@ export default class Timer extends React.Component {
       return;
     }
 
-    this.setState({
-      timing: true,
-      display: `${seconds} Seconds`,
-    });
-
     const id = setInterval(() => {
       this.setState({
         display: `${--seconds} Seconds`,
@@ -67,5 +68,11 @@ export default class Timer extends React.Component {
         clearInterval(id);
       }
     }, 1000);
+
+    this.setState({
+      timing: true,
+      timingId: id,
+      display: `${seconds} Seconds`,
+    });
   }
 };
